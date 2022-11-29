@@ -1,4 +1,5 @@
 public class Product {
+    // Описывает продук? который можно добавить для подсчета в калькулятор
     String name;
     double price;
 

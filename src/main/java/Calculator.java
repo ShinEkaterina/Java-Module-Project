@@ -1,4 +1,3 @@
-import java.util.Scanner;
 
 public class Calculator {
     int peopleNumber;
@@ -9,19 +8,20 @@ public class Calculator {
         this.peopleNumber = peopleNumber;
         this.sum = 0;
         this.productList = "";
-        System.out.println("Create calculatoe with " + peopleNumber);
-
     }
 
     void addProduct(Product product){
         this.sum = this.sum + product.price;
         this.productList = this.productList.concat(product.name + "\n");
-        System.out.println("Product " + product.name + " with price = " + product.price + " successfully added");
+        System.out.println("Товар " + product.name + " на сумму = " + product.price + " успешно добавлен");
     }
 
     void printProductList(){
         System.out.println(this.productList);
+    }
 
+    double getSumToPay(){
+        return this.sum / this.peopleNumber;
     }
 
 }

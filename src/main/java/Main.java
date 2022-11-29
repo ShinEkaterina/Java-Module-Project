@@ -6,31 +6,36 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int personNumber = getPersonNumber();
+        double sumToPay;
 
         // Создается калькулятор
         Calculator calculator = new Calculator(personNumber);
         // Пользователь вводит наименование и стоимость товара для подсчета
         while (true){
-            System.out.println("Enter product name");
+            System.out.println("Введите название товара");
             if (scanner.hasNextLine()){
                 String productName = scanner.nextLine();
-                if(productName.equalsIgnoreCase("finish")){
+                if(productName.equalsIgnoreCase("завершить")){
                     break;
                 } else {
                     // Пользователь вводит стоимость товара для подсчета
                     while (true){
-                        System.out.println("Enter product price in rubles");
+                        System.out.println("Введите стоимость товара в рублях");
                         if(scanner.hasNextDouble()){
                             double productPrice = scanner.nextDouble();
+                            if (productPrice < 0){
+                                System.out.println("Некорректное значение");
+                                continue;
+                            }
                             Product product = new Product(productName, productPrice);
                             calculator.addProduct(product);
                             scanner.nextLine();
                             break;
                         } else {
-                            if (scanner.nextLine().equalsIgnoreCase("finish")) {
+                            if (scanner.nextLine().equalsIgnoreCase("завершить")) {
                                 break;
                             } else{
-                                System.out.println("Price is incorrect");
+                                System.out.println("Некорректное значение");
                             }
 
                         }
@@ -38,8 +43,17 @@ public class Main {
                 }
             }
         }
-        System.out.println("List of products:");
+        System.out.println("Добавленные товары:");
         calculator.printProductList();
+
+        sumToPay = calculator.getSumToPay();
+
+         if (Math.floor(sumToPay) == 1)
+           System.out.println(String.format("Каждый должен заплатить по %.2f рубль",sumToPay));
+       else if (Math.floor(sumToPay) == 2 || Math.floor(sumToPay) == 3 || Math.floor(sumToPay) == 4)
+            System.out.println(String.format("Каждый должен заплатить по %.2f рубля",sumToPay));
+        else
+            System.out.println(String.format("Каждый должен заплатить по %.2f рублей",sumToPay));
     }
 
     public static int getPersonNumber(){
@@ -47,22 +61,20 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int personNumber;
         while (true){
-            System.out.println("Please enter number of people:");
+            System.out.println("На скольких человек нужно разделить счет?");
             if(scanner.hasNextInt()){
                 personNumber = scanner.nextInt();
                 if (personNumber == 1){
-                    System.out.println("There is no need to calculate");
+                    System.out.println("Нет смысла что то считать и делить");
                 }
                 else if (personNumber < 1){
-                    System.out.println("Number of people is incorrect");
+                    System.out.println("Некорректное значение для подсчета");
                 }
                 else {
-                    System.out.println("Start calculating for " +personNumber +" people");
-                  //  scanner.close();
                     return personNumber;
                 }
             } else{
-                System.out.println("Input is incorrect");
+                System.out.println("Некорректное значение для подсчета");
                 scanner.nextLine();
             }
 
