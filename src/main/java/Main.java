@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -11,15 +10,17 @@ public class Main {
         // Создается калькулятор
         Calculator calculator = new Calculator(personNumber);
         // Пользователь вводит наименование и стоимость товара для подсчета
-        while (true){
+        boolean stopEnterProduct = false;
+        boolean stopEnterPrice = false;
+        while (!stopEnterProduct){
             System.out.println("Введите название товара");
             if (scanner.hasNextLine()){
                 String productName = scanner.nextLine();
                 if(productName.equalsIgnoreCase("завершить")){
-                    break;
+                    stopEnterProduct = true;
                 } else {
                     // Пользователь вводит стоимость товара для подсчета
-                    while (true){
+                    while (!stopEnterPrice){
                         System.out.println("Введите стоимость товара в рублях");
                         if(scanner.hasNextDouble()){
                             double productPrice = scanner.nextDouble();
@@ -30,10 +31,10 @@ public class Main {
                             Product product = new Product(productName, productPrice);
                             calculator.addProduct(product);
                             scanner.nextLine();
-                            break;
+                            stopEnterPrice = true;
                         } else {
                             if (scanner.nextLine().equalsIgnoreCase("завершить")) {
-                                break;
+                                stopEnterPrice = true;
                             } else{
                                 System.out.println("Некорректное значение");
                             }
@@ -46,7 +47,7 @@ public class Main {
         System.out.println("Добавленные товары:");
         calculator.printProductList();
 
-        sumToPay = calculator.getSumToPay();
+        sumToPay = calculator.calculateSumToPay();
 
          if (Math.floor(sumToPay) == 1)
            System.out.println(String.format("Каждый должен заплатить по %.2f рубль",sumToPay));

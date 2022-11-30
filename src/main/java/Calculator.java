@@ -1,27 +1,25 @@
 
 public class Calculator {
-    int peopleNumber;
-    double sum;
-    String productList;
+    private int peopleNumber;
+    private double sum;
+    private String productList = "";
 
-    Calculator(int peopleNumber){
+    public Calculator(int peopleNumber){
         this.peopleNumber = peopleNumber;
-        this.sum = 0;
-        this.productList = "";
     }
 
-    void addProduct(Product product){
-        this.sum = this.sum + product.price;
-        this.productList = this.productList.concat(product.name + "\n");
-        System.out.println("Товар " + product.name + " на сумму = " + product.price + " успешно добавлен");
+    public void addProduct(Product product){
+        this.sum = this.sum + product.getPrice();
+        this.productList = this.productList.concat(product.getName() + "\n");
+        System.out.println("Товар " + product.getName() + " на сумму = " + product.getPrice() + " успешно добавлен");
     }
 
-    void printProductList(){
+    public void printProductList(){
         System.out.println(this.productList);
     }
 
-    double getSumToPay(){
-        return this.sum / this.peopleNumber;
+    public double calculateSumToPay(){
+        return sum / peopleNumber;
     }
 
 }
